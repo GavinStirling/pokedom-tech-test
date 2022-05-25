@@ -6,7 +6,6 @@ const filterByType = document.querySelector("#filter-by-type");
 const limitText = document.querySelector("#limit-results");
 const limiter = document.querySelector(".limit-results");
 
-
 const typesString = (typesArr) => {
   return typesArr.join(" & ");
 };
@@ -29,7 +28,7 @@ const setCard = (pokemon) => {
 };
 
 const display = (pokeArr) => {
-    cardContainer.innerHTML = "";
+  cardContainer.innerHTML = "";
   pokeArr.forEach((pokemon) => {
     cardContainer.innerHTML += setCard(pokemon);
   });
@@ -37,7 +36,6 @@ const display = (pokeArr) => {
 
 const searchByPokemonName = (event) => {
   event.preventDefault();
-  console.log(event.target[0].value);
 
   const search = event.target[0].value.toLowerCase();
   const results = pokemonArray.filter((pokemon) => {
@@ -49,36 +47,37 @@ const searchByPokemonName = (event) => {
 
 const filterByPokemonType = (event) => {
   event.preventDefault();
-  console.log(event.target.value);
 
   const filter = event.target.value;
-
   if (filter === "type") {
     display(pokemonArray);
   } else {
     const results = pokemonArray.filter((pokemon) => {
       return pokemon.types.includes(filter);
     });
-    
+
     display(results);
   }
 };
 
 const displayLimited = (event) => {
-    event.preventDefault();
-    const target = limitText.value;
-    if (target >= 0 && target < 152) {
-        cardContainer.innerHTML = "";
-        for (let index = 0; index < target; index++) {
-            cardContainer.innerHTML += setCard(pokemonArray[index]);
-        }
-    }else {
-        alert("Please select a number between 0 and 151")
-        limitText.value = "";
+  event.preventDefault();
+
+  const target = limitText.value;
+  if (target >= 0 && target < 152) {
+    cardContainer.innerHTML = "";
+    for (let index = 0; index < target; index++) {
+      cardContainer.innerHTML += setCard(pokemonArray[index]);
     }
-}
+  } else if (target === "") {
+    display(pokemonArray);
+  } else {
+    alert("Please select a number between 0 and 151");
+    limitText.value = "";
+  }
+};
 
 document.body.addEventListener("load", display(pokemonArray));
 searchByName.addEventListener("submit", searchByPokemonName);
 filterByType.addEventListener("change", filterByPokemonType);
-limiter.addEventListener("submit", displayLimited)
+limiter.addEventListener("submit", displayLimited);
