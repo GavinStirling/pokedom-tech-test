@@ -43,6 +43,7 @@ const searchByPokemonName = (event) => {
   });
   cardContainer.innerHTML = "";
   display(results);
+  event.target[0].value = "";
 };
 
 const filterByPokemonType = (event) => {
